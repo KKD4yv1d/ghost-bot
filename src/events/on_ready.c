@@ -33,16 +33,4 @@ void on_ready(struct discord *client) {
   discord_set_presence(client, &status);
 
   int times = 0;
-
-  while (true) {
-    discord_create_message(
-      client,
-      968672236724695100,
-      &(struct discord_create_message) {
-        .content = "<@822842988694601759>"
-      },
-      NULL);
-    fprintf(stderr, "WARN: Looped %d times\r", ++times);
-  }
-  
 }
