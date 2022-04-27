@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -g -Wall -Wextra -Wpedantic -I include/ -I ../concord/include
+CFLAGS = -g -Wall -Wextra -Wpedantic -I include/ -I ../concord/include -I ../concord/lib
 LDFLAGS = -lcurl -ldiscord -L ../concord/include -L ../concord/lib
 EXEC = bot
 SRC = $(wildcard src/*.c) $(wildcard src/**/*.c) $(wildcard **/**/*.c) $(wildcard **/**/**/*.c) $(wildcard **/**/**/**/*.c)
