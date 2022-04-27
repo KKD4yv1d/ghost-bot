@@ -1,5 +1,8 @@
 *.o
 
+# Prebuilt binaries (aarch64 only)
+bin/
+
 # Discloud stuff
 *.py
 *.txt
