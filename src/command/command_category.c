@@ -1,6 +1,6 @@
 #include <command/command_category.h>
 
-char *get_category_name(CommandCategory category) {
+char *get_command_category_name(CommandCategory category) {
   switch (category) {
     case ECONOMY:
       return "💰 Economy";

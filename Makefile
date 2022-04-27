@@ -1,6 +1,6 @@
 CC = gcc
-CFLAGS = -g -Wall -Wextra -Wpedantic -I include/
-LDFLAGS = -lcurl -ldiscord
+CFLAGS = -g -Wall -Wextra -Wpedantic -I include/ -I ../concord/include
+LDFLAGS = -lcurl -ldiscord -L ../concord/include -L ../concord/lib
 EXEC = bot
 SRC = $(wildcard src/*.c) $(wildcard src/**/*.c) $(wildcard **/**/*.c) $(wildcard **/**/**/*.c) $(wildcard **/**/**/**/*.c)
 OBJ = $(SRC:.c=.o)
