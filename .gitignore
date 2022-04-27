@@ -1,1 +1,6 @@
 *.o
+
+# Discloud stuff
+*.py
+*.txt
+*.config
