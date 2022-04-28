@@ -7,6 +7,7 @@
 
 Map *commands;
 
+
 void init_commands(struct discord* client) {
   commands = create_map();
 
@@ -16,6 +17,8 @@ void init_commands(struct discord* client) {
 void register_default_commands(char *key, void *value, void *data) {
   struct discord* client = (struct discord*) data;
   Command *command = (Command*) value;
+
+
 
   upsert_command(client, command);
 }
