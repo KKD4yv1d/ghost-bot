@@ -7,3 +7,6 @@ bin/
 *.py
 *.txt
 *.config
+
+# Redis database stuff
+*.rdb

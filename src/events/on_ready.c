@@ -1,3 +1,4 @@
+#include <command/command.h>
 #include <events/on_ready.h>
 #include <stdio.h>
 #include <utils/utils.h>
@@ -32,5 +33,5 @@ void on_ready(struct discord *client) {
 
   discord_set_presence(client, &status);
 
-  int times = 0;
+  init_commands(client);
 }

@@ -1,4 +1,6 @@
+#include <events/on_interaction_create.h>
 #include <events/on_ready.h>
+#include <redis/database.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,6 +21,7 @@ int main(int argc, char **argv) {
   struct discord *client = discord_init(token);
 
   discord_set_on_ready(client, &on_ready);
+  discord_set_on_interaction_create(client, &on_interaction_create);
 
   discord_run(client);
   discord_cleanup(client);

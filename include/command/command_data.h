@@ -2,6 +2,7 @@
 #define _H_COMMAND_DATA
 
 #include <concord/discord.h>
+#include "../utils/map.h"
 
 typedef struct {
   /**
@@ -18,6 +19,11 @@ typedef struct {
    * The discord interaction
    */
   struct discord_interaction* interaction;
+
+  /**
+   * All discord command options
+   */
+  Map *options;
 } CommandData;
 
 CommandData* create_command_data(struct discord* client, struct discord_interaction* interaction);

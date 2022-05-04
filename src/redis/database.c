@@ -1,8 +1,9 @@
 #include <hiredis/hiredis.h>
 #include <redis/database.h>
+#include <concord/discord.h>
 #include <stdlib.h>
 
-RedisConnection *create_connection(char *host, int port) {
+RedisConnection *create_redis_connection(char *host, int port) {
   if (host == NULL) {
     host = REDIS_LOCAL_HOST;
   }
@@ -13,6 +14,19 @@ RedisConnection *create_connection(char *host, int port) {
   RedisConnection *self = (RedisConnection *) calloc(1, sizeof(RedisConnection));
 
   self->context = redisConnect(host, port);
+
+  if (self->context == NULL || self->context->err) {
+    if (self->context) {
+      log_error("Connection error: %s", self->context->errstr);
+      redisFree(self->context);
+    } else {
+      log_error("Connection error: can't allocate redis context");
+    }
+
+    free(self);
+    return NULL;
+  }
+
   self->query = &redis_query;
   self->exec = &redis_exec;
   self->free = &redis_free;
@@ -20,7 +34,7 @@ RedisConnection *create_connection(char *host, int port) {
   return self;
 }
 
-RedisReply *create_reply(redisReply *reply) {
+RedisReply *create_redis_reply(redisReply *reply) {
   RedisReply *self = (RedisReply *) calloc(1, sizeof(RedisReply));
 
   self->reply = reply;
@@ -47,7 +61,7 @@ double reply_as_double(RedisReply *self) {
 }
 
 int reply_valid(RedisReply *self) {
-  return self->reply != NULL && self->reply->type != REDIS_REPLY_NIL;
+  return self != NULL && self->reply != NULL;
 }
 
 void reply_free(RedisReply *self) {
@@ -66,7 +80,7 @@ RedisReply *redis_query(RedisConnection *self, char *query, ...) {
   redisReply *reply = redisvCommand(self->context, query, args);
   va_end(args);
 
-  return create_reply(reply);
+  return create_redis_reply(reply);
 }
 
 void redis_exec(RedisConnection *self, char *query, ...) {

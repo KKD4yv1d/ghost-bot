@@ -31,8 +31,8 @@ struct redis_t {
 typedef struct redis_t RedisConnection;
 typedef struct reply_t RedisReply;
 
-RedisConnection *create_connection(char *host, int port);
-RedisReply *create_reply(redisReply *reply);
+RedisConnection *create_redis_connection(char *host, int port);
+RedisReply *create_redis_reply(redisReply *reply);
 
 char *reply_as_string(RedisReply *reply);
 int reply_as_int(RedisReply *reply);

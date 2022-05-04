@@ -2,15 +2,15 @@
 
 char *get_command_category_name(CommandCategory category) {
   switch (category) {
-    case ECONOMY:
+    case CATEGORY_ECONOMY:
       return "💰 Economy";
-    case FUN:
+    case CATEGORY_FUN:
       return "🎉 Fun";
-    case UTILITY:
+    case CATEGORY_UTILITY:
       return "🔧 Utility";
-    case MINIGAME:
+    case CATEGORY_MINIGAME:
       return "🎮 Minigame";
-    case MODERATION:
+    case CATEGORY_MODERATION:
       return "👮 Moderation";
   }
 }

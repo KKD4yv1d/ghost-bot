@@ -32,7 +32,7 @@ struct command_t {
   /**
    * All command options (use NULL if the command doesn't have options)
    */
-  struct discord_application_command_option *options;
+  struct discord_application_command_options *options;
 
   /**
    * The function to execute when this command is used by a user
@@ -47,12 +47,14 @@ struct command_t {
 
 typedef struct command_t Command;
 
-void init_commands();
+void init_commands(struct discord *client);
 void upsert_command(struct discord *client, Command *command);
 void update_command(struct discord *client, Command *command);
+
 int exists_command(char *name);
 Command *get_command(char *name);
 void delete_command(struct discord *client, Command *command);
+
 char *create_command_description(Command *command);
 void register_default_commands(char *key, void *value, void *data);
 
