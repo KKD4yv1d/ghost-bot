@@ -28,6 +28,8 @@ typedef enum byte_unit_t {
   BYTE_UNIT_TERABYTE
 } ByteUnit;
 
+void set_terminal_title(char *title);
+
 float get_cpu_usage();
 float get_ram_usage(ByteUnit unit);
 
