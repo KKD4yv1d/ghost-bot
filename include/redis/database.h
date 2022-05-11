@@ -6,7 +6,7 @@
 
 #include <hiredis/hiredis.h>
 
-struct reply_t {
+typedef struct reply_t {
   redisReply *reply;
 
   char *(*as_string)(struct reply_t *reply);
@@ -18,18 +18,15 @@ struct reply_t {
   int type;
 
   void (*free)(struct reply_t *reply);
-};
+} RedisReply;
 
-struct redis_t {
+typedef struct redis_t {
   redisContext *context;
 
   struct reply_t *(*query)(struct redis_t *redis, char *command, ...);
   void (*exec)(struct redis_t *redis, char *command, ...);
   void (*free)(struct redis_t *redis);
-};
-
-typedef struct redis_t RedisConnection;
-typedef struct reply_t RedisReply;
+} RedisConnection;
 
 RedisConnection *create_redis_connection(char *host, int port);
 RedisReply *create_redis_reply(redisReply *reply);

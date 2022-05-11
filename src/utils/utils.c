@@ -122,13 +122,13 @@ float get_ram_usage(ByteUnit unit) {
       usage = info.ru_maxrss / 1024.0f;
       break;
     case BYTE_UNIT_MEGABYTE:
-      usage = info.ru_maxrss / (1024.0f * 1024.0f);
+      usage = info.ru_maxrss / pow(1024.0f, 2);
       break;
     case BYTE_UNIT_GIGABYTE:
-      usage = info.ru_maxrss / (1024.0f * 1024.0f * 1024.0f);
+      usage = info.ru_maxrss / pow(1024.0f, 3);
       break;
     case BYTE_UNIT_TERABYTE:
-      usage = info.ru_maxrss / (1024.0f * 1024.0f * 1024.0f * 1024.0f);
+      usage = info.ru_maxrss / pow(1024.0f, 4);
   }
 
   return usage;

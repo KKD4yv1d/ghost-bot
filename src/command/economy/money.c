@@ -1,4 +1,8 @@
 #include <command/economy/money.h>
+#include <redis/database.h>
+#include <utils/utils.h>
+#include <
+#include <stdlib.h>
 
 Command *register_money(void) {
   Command *self = calloc(1, sizeof(Command));
@@ -27,5 +31,52 @@ Command *register_money(void) {
 }
 
 void money_command(CommandData *data) {
-  log_info("O comando de money foi usado!");
+  RedisConnection *conn = create_redis_connection(NULL, 0);
+
+  if (conn == NULL) {
+    send_error_embed("Não foi possivel se conectar a database!", data);
+    return;
+  }
+  
+  /**
+   * Verify if that user exists on the redis database
+   */
+  RedisReply existsReply = conn->query(conn, "EXISTS profile:%llu:money", data->sender->id);
+
+  if (!existsReply->valid(existsReply) ||
+      existsReply->as_int() != 1) {
+    send_error_embed("Você não tem uma conta na database!", data);
+    redis_free(conn);
+    reply_free(existsReply);
+    return;
+  }
+
+  /**
+   * Get the user money from database and send as an embed
+   */
+  RedisReply moneyReply = conn->query(conn, "GET profile:%llu:money", data->sender->id);
+
+  int money_count = moneyReply->as_int();
+
+  struct discord_interaction_response *params = calloc(1, sizeof(struct discord_interaction_response));
+  struct discord_interaction_callback_data *params_data = calloc(1, sizeof(struct discord_interaction_callback_data));
+  struct discord_embed embed = {
+    .color = 0xA0FFAA
+  };
+
+  discord_embed_set_title(&embed, "Seus kwanzas (Primeiro layout, vai mudarkk)");
+  discord_embed_set_description(&embed, "Você atualmente tem %d kwanzas", money_count);
+
+  char *mention = get_user_as_mention(data->sender);
+
+  params_data->content = mention;
+  params_data->embeds = &(struct discord_embeds) {
+    .size = 1,
+    .array = &embed
+  };
+
+  params->type = DISCORD_INTERACTION_CHANNEL_MESSAGE_WITH_SOURCE;
+  params->data = params_data;
+
+  discord_create_interaction_response()
 }
