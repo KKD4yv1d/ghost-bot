@@ -1,5 +1,6 @@
 #include <command/command.h>
 #include <command/command_category.h>
+#include <command/economy/money.h>
 #include <command/info/ping.h>
 #include <command/info/botinfo.h>
 #include <command/utility/shell.h>
@@ -25,6 +26,7 @@ void init_commands(struct discord* client) {
   commands->put(commands, "ping", register_ping());
   commands->put(commands, "botinfo", register_botinfo());
   commands->put(commands, "shell", register_shell());
+  commands->put(commands, "money", register_money());
 
   commands->for_each(commands, client, &register_default_commands);
   connection->free(connection);

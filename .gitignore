@@ -10,3 +10,5 @@ bin/
 
 # Redis database stuff
 *.rdb
+
+

@@ -4,7 +4,7 @@
 #include <utils/emoji.h>
 #include <utils/utils.h>
 
-Command *register_botinfo() {
+Command *register_botinfo(void) {
   Command *self = calloc(1, sizeof(Command));
 
   self->name = "botinfo";

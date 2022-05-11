@@ -5,7 +5,7 @@
 #include <concord/discord_codecs.h>
 #include <malloc.h>
 
-Command *register_ping() {
+Command *register_ping(void) {
   Command *self = (Command *) calloc(1, sizeof(Command));
 
   self->name = "ping";

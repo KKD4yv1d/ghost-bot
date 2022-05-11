@@ -4,6 +4,7 @@
 #include <concord/discord.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "../command/command_data.h"
 
 #define ASSERT(expr, msg)                           \
   if (!expr) {                     .                \
@@ -17,7 +18,10 @@ size_t array_len(void **array);
 
 /* Discord utilities */
 struct discord_guilds *get_user_guilds(struct discord *discord);
+
 char *get_user_as_mention(struct discord_user *user);
+
+void send_error_embed(char *message, CommandData *data);
 
 /* Process utilities (RAM, CPU, ...) */
 typedef enum byte_unit_t {

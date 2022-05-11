@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <utils/map.h>
 
-Map *create_map() {
+Map *create_map(void) {
   Map *map = (Map *) calloc(1, sizeof(Map));
 
   map->pairs = (Pair **) calloc(0, sizeof(Pair*));

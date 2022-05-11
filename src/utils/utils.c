@@ -39,6 +39,37 @@ char *get_user_as_mention(struct discord_user *user) {
   return string;
 }
 
+
+/**
+ * This send an error embed on the given interaction
+ */
+void send_error_embed(char *message, CommandData *data) {
+  struct discord_embed embed = {
+    .color = 0xFFA0AF
+  };
+
+  discord_embed_set_title(&embed, ":x: | Erro");
+  discord_embed_set_description(&embed, "_  _Um erro ocorreu: %s", message);
+
+  discord_create_interaction_response(
+    data->client,
+    data->interaction->id,
+    data->interaction->token,
+    &(struct discord_interaction_response) {
+      .type = DISCORD_INTERACTION_CHANNEL_MESSAGE_WITH_SOURCE,
+      .data = &(struct discord_interaction_callback_data) {
+        .embeds = &(struct discord_embeds) {
+          .size = 1,
+          .array = &embed
+        }
+      }
+    },
+    NULL
+  );
+
+  discord_embed_cleanup(&embed);
+}
+
 /* Array utilites */
 
 /**
