@@ -78,5 +78,18 @@ void money_command(CommandData *data) {
   params->type = DISCORD_INTERACTION_CHANNEL_MESSAGE_WITH_SOURCE;
   params->data = params_data;
 
-  discord_create_interaction_response()
+  discord_create_interaction_response(
+    data->client,
+    data->interaction->id,
+    data->interaction->token,
+    &params,
+    NULL
+  );
+
+  discord_embed_cleanup(&embed);
+  free(params);
+  free(params_data);
+  free(mention);
+  reply_free(moneyReply);
+  redis_free(conn);
 }
