@@ -1,3 +1,4 @@
+#include <math.h>
 #include <stdarg.h>
 #include <sys/resource.h>
 #include <stdio.h>
@@ -34,7 +35,7 @@ struct discord_guilds *get_user_guilds(struct discord *discord) {
  */
 char *get_user_as_mention(struct discord_user *user) {
   char *string = (char *) malloc(sizeof(char) * 22);
-  snprintf(string, 22, "<@%lu>", user->id);
+  snprintf(string, 22, "<@%llu>", user->id);
 
   return string;
 }
@@ -49,7 +50,7 @@ void send_error_embed(char *message, CommandData *data) {
   };
 
   discord_embed_set_title(&embed, ":x: | Erro");
-  discord_embed_set_description(&embed, "_  _Um erro ocorreu: %s", message);
+  discord_embed_set_description(&embed, "_  _ Um erro ocorreu: %s", message);
 
   discord_create_interaction_response(
     data->client,

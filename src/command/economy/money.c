@@ -1,7 +1,6 @@
 #include <command/economy/money.h>
 #include <redis/database.h>
 #include <utils/utils.h>
-#include <
 #include <stdlib.h>
 
 Command *register_money(void) {
@@ -41,10 +40,10 @@ void money_command(CommandData *data) {
   /**
    * Verify if that user exists on the redis database
    */
-  RedisReply existsReply = conn->query(conn, "EXISTS profile:%llu:money", data->sender->id);
+  RedisReply *existsReply = conn->query(conn, "EXISTS profile:%llu:money", data->sender->id);
 
   if (!existsReply->valid(existsReply) ||
-      existsReply->as_int() != 1) {
+      existsReply->as_int(existsReply) != 1) {
     send_error_embed("Você não tem uma conta na database!", data);
     redis_free(conn);
     reply_free(existsReply);
@@ -54,9 +53,9 @@ void money_command(CommandData *data) {
   /**
    * Get the user money from database and send as an embed
    */
-  RedisReply moneyReply = conn->query(conn, "GET profile:%llu:money", data->sender->id);
+  RedisReply *moneyReply = conn->query(conn, "GET profile:%llu:money", data->sender->id);
 
-  int money_count = moneyReply->as_int();
+  int money_count = moneyReply->as_int(moneyReply);
 
   struct discord_interaction_response *params = calloc(1, sizeof(struct discord_interaction_response));
   struct discord_interaction_callback_data *params_data = calloc(1, sizeof(struct discord_interaction_callback_data));
@@ -82,7 +81,7 @@ void money_command(CommandData *data) {
     data->client,
     data->interaction->id,
     data->interaction->token,
-    &params,
+    params,
     NULL
   );
 

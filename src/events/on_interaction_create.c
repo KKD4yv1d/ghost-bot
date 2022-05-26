@@ -2,6 +2,7 @@
 #include <command/command_data.h>
 #include <events/on_interaction_create.h>
 #include <pthread.h>
+#include <stdbool.h>
 
 void on_interaction_create(struct discord *client,
                            const struct discord_interaction *interaction) {
@@ -9,20 +10,27 @@ void on_interaction_create(struct discord *client,
     case DISCORD_INTERACTION_APPLICATION_COMMAND: {
       if (interaction->data == NULL)
         return;
+      
+      log_debug("Command %s used", interaction->data->name);
 
       Command *command = get_command(interaction->data->name);
 
       if (command == NULL)
         return;
 
-      if (command->options != NULL &&
-          interaction->data->options == NULL)
-        return;
-
       CommandData *data = create_command_data(
         client,
         (struct discord_interaction *) interaction
       );
+
+      for (int i = 0; i < command->options->size; i++) {
+        if (command->options->array[i].required == true &&
+            data->options->get(data->options, command->options->array[i].name) == NULL) {
+          free_command_data(data);
+          return;
+        }
+      }
+
       pthread_t thread_id;
 
       pthread_create(&thread_id, NULL, (void (*)) command->execute, data);

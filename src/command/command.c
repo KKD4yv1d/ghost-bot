@@ -46,8 +46,8 @@ void register_default_commands(char *key, void *value, void *data) {
   }
 
   reply->free(reply);
-  connection->exec(connection, "SET commands:%s 1", command->name);
   upsert_command(client, command);
+  connection->exec(connection, "SET commands:%s 1", command->name);
 }
 
 char *create_command_description(Command *command) {
@@ -87,6 +87,7 @@ void upsert_command(struct discord *client, Command *command) {
   );
 
   free(params.description);
+
   free(params.options->array);
   free(params.options);
 }

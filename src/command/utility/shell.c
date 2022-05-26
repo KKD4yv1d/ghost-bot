@@ -43,10 +43,10 @@ void shell_command(CommandData *data) {
 
   FILE *process = popen(data->options->get(data->options, "command"), "r");
 
-  char *output = calloc(1, 2000),
-       *tmp = calloc(1, 2000);
+  char *output = calloc(1, 1500),
+       *tmp = calloc(1, 1500);
 
-  int max_output_size = 2000;
+  int max_output_size = 1500;
 
   if (process == NULL) {
     send_error_embed("Não foi possivel iniciar o processo!", data);
