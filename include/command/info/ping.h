@@ -7,7 +7,7 @@
  * This register the ping command and returns a
  * Command * struct
  */
-Command *register_ping();
+Command *register_ping(void);
 
 /**
  * When the command is executed, this method will

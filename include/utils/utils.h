@@ -34,7 +34,7 @@ typedef enum byte_unit_t {
 
 void set_terminal_title(char *title);
 
-float get_cpu_usage();
+float get_cpu_usage(void);
 float get_ram_usage(ByteUnit unit);
 
 /* File utilities */

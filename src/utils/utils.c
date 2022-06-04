@@ -35,7 +35,7 @@ struct discord_guilds *get_user_guilds(struct discord *discord) {
  */
 char *get_user_as_mention(struct discord_user *user) {
   char *string = (char *) malloc(sizeof(char) * 22);
-  snprintf(string, 22, "<@%llu>", user->id);
+  snprintf(string, 22, "<@%lu>", user->id);
 
   return string;
 }

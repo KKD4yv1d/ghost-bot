@@ -3,7 +3,7 @@
 
 #include "../command.h"
 
-Command *register_botinfo();
+Command *register_botinfo(void);
 void botinfo_command(CommandData *data);
 
 #endif /* _H_BOTINFO */

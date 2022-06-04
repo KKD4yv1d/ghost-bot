@@ -24,7 +24,7 @@ struct map_m {
 
 typedef struct map_m Map;
 
-Map *create_map();
+Map *create_map(void);
 Pair *create_pair(char *key, void *value);
 void destroy_pair(Pair *pair);
 void destroy_map(Map *map);

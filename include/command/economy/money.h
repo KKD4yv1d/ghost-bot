@@ -3,7 +3,7 @@
 
 #include "../command.h"
 
-Command *register_money();
+Command *register_money(void);
 
 void money_command(CommandData *data);
 
